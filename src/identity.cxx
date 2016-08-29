@@ -1,8 +1,4 @@
-template<class T>
-struct type_is {
-    using type = T;
-};
-
+#include "identity.hpp"
 // apply convention via inheritance
 
 // primary template handles types that are not volatile qualified
