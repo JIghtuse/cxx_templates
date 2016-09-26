@@ -1,0 +1,5 @@
+PROCESS(float, x)
+PROCESS(float, y)
+PROCESS(float, z)
+PROCESS(float, weight)
+PROCESS(int, n)
