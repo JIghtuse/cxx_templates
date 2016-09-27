@@ -43,8 +43,9 @@ std::ostream& operator<<(std::ostream& out, const reading& r)
                << "beta: " << r.beta_value({}, {});
 }
 
+template<typename Reading>
 std::tuple<double, double, double, double> get_adjusted_values(
-        const reading& r,
+        const Reading& r,
         location,
         datetime t1,
         datetime t2)
