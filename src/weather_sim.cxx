@@ -43,18 +43,18 @@ std::ostream& operator<<(std::ostream& out, const reading& r)
                << "beta: " << r.beta_value({}, {});
 }
 
-template<typename Reading>
+template<typename AlphaValue, typename BetaValue>
 std::tuple<double, double, double, double> get_adjusted_values(
-        const Reading& r,
+        AlphaValue alpha_value, BetaValue beta_value,
         location,
         datetime t1,
         datetime t2)
 {
-    double alpha1 = r.alpha_value({}, t1);
-    double beta1 = r.alpha_value({}, t1);
+    double alpha1 = alpha_value({}, t1);
+    double beta1 = beta_value({}, t1);
 
-    double alpha2 = r.alpha_value({}, t2);
-    double beta2 = r.alpha_value({}, t2);
+    double alpha2 = alpha_value({}, t2);
+    double beta2 = beta_value({}, t2);
 
     adjust_values(&alpha1, &beta1, &alpha2, &beta2);
     return std::make_tuple(alpha1, beta1, alpha2, beta2);
@@ -65,7 +65,13 @@ int main()
 {
     auto r = reading{2.3, 4.2};
     std::cout << r << '\n';
-    auto t = get_adjusted_values(r, {}, {}, {});
+    auto t = get_adjusted_values(
+        [&r](location l, datetime t) {
+            return r.alpha_value(l, t);
+        },
+        [&r](location l, datetime t) {
+            return r.beta_value(l, t);
+        }, {}, {}, {});
     std::cout << "alpha: " << std::get<0>(t)
               << ", beta: " << std::get<1>(t) << '\n';
     std::cout << "alpha: " << std::get<2>(t)
