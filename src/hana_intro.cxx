@@ -17,6 +17,19 @@ struct Dog {
     std::string name;
 };
 
+struct Person {
+    BOOST_HANA_DEFINE_STRUCT(
+        Person,
+        (std::string, name),
+        (int, age));
+};
+
+auto serialize = [](std::ostream& os, auto const& object) {
+    hana::for_each(hana::members(object), [&](auto member) {
+        os << member << '\n';
+    });
+};
+
 int main()
 {
     using namespace hana::literals;
@@ -54,4 +67,7 @@ int main()
 
     static_assert(has_name(garfield), "");
     static_assert(!has_name(), "");
+
+    Person john{"John", 30};
+    serialize(std::cout, john);
 }
