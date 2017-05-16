@@ -19,3 +19,6 @@ add_executable(class_template_stack src/stack.cxx)
 add_executable(class_template_partial_spec src/parital_specialization.cxx)
 add_executable(class_template_default_args src/default_arguments.cxx)
 add_executable(non_type_template_parameters src/non_type_template_parameters.cxx)
+
+add_executable(inclusion_model
+    src/print_typeof_main.cpp)
